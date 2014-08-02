@@ -33,6 +33,7 @@ DEVICE_OWNER_ROUTER_INTF = "network:router_interface"
 DEVICE_OWNER_ROUTER_GW = "network:router_gateway"
 DEVICE_OWNER_FLOATINGIP = "network:floatingip"
 DEVICE_OWNER_DHCP = "network:dhcp"
+DEVICE_OWNER_EXTERNAL_PORT = "network:external_port"
 
 FLOATINGIP_KEY = '_floatingips'
 INTERFACE_KEY = '_interfaces'
@@ -80,6 +81,7 @@ AGENT_TYPE_MLNX = 'Mellanox plugin agent'
 AGENT_TYPE_METERING = 'Metering agent'
 AGENT_TYPE_METADATA = 'Metadata agent'
 AGENT_TYPE_SDNVE = 'IBM SDN-VE agent'
+AGENT_TYPE_EXTERNAL = 'External agent'
 L2_AGENT_TOPIC = 'N/A'
 
 PAGINATION_INFINITE = 'infinite'
@@ -115,3 +117,10 @@ DHCPV6_STATEFUL = 'dhcpv6-stateful'
 DHCPV6_STATELESS = 'dhcpv6-stateless'
 IPV6_SLAAC = 'slaac'
 IPV6_MODES = [DHCPV6_STATEFUL, DHCPV6_STATELESS, IPV6_SLAAC]
+
+# To avoid conflicts with existing status types
+# while keeping them generic for new resources.
+STATUS_ACTIVE = 'ACTIVE'
+STATUS_BUILD = 'BUILD'
+STATUS_DOWN = 'DOWN'
+STATUS_ERROR = 'ERROR'

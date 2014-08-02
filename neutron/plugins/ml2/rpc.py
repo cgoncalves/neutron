@@ -21,6 +21,7 @@ from neutron.db import agents_db
 from neutron.db import api as db_api
 from neutron.db import dhcp_rpc_base
 from neutron.db import securitygroups_rpc_base as sg_db_rpc
+from neutron.db import external_port_rpc_base
 from neutron import manager
 from neutron.openstack.common import log
 from neutron.openstack.common.rpc import proxy
@@ -38,6 +39,7 @@ TAP_DEVICE_PREFIX_LENGTH = 3
 
 
 class RpcCallbacks(dhcp_rpc_base.DhcpRpcCallbackMixin,
+                   external_port_rpc_base.ExternalPortAgentRpcCallbackMixin,
                    sg_db_rpc.SecurityGroupServerRpcCallbackMixin,
                    type_tunnel.TunnelRpcCallbackMixin):
 
@@ -205,7 +207,8 @@ class RpcCallbacks(dhcp_rpc_base.DhcpRpcCallbackMixin,
 
 class AgentNotifierApi(proxy.RpcProxy,
                        sg_rpc.SecurityGroupAgentRpcApiMixin,
-                       type_tunnel.TunnelAgentRpcApiMixin):
+                       type_tunnel.TunnelAgentRpcApiMixin,
+                       external_port_rpc_base.ExternalPortAgentRpcApiMixin):
     """Agent side of the openvswitch rpc API.
 
     API version history:

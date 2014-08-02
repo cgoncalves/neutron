@@ -22,6 +22,8 @@ L2POPULATION = 'l2population'
 CREATE = 'create'
 DELETE = 'delete'
 UPDATE = 'update'
+ATTACH = 'attach'
+DETACH = 'detach'
 
 AGENT = 'q-agent-notifier'
 PLUGIN = 'q-plugin'
@@ -35,7 +37,10 @@ L3_AGENT = 'l3_agent'
 DHCP_AGENT = 'dhcp_agent'
 METERING_AGENT = 'metering_agent'
 LOADBALANCER_AGENT = 'n-lbaas_agent'
+EXTERNAL_AGENT = 'external_agent'
 
+ATTACHMENT_POINT = 'attachment_point'
+EXTERNAL_PORT = 'external_port'
 
 def get_topic_name(prefix, table, operation, host=None):
     """Create a topic name.

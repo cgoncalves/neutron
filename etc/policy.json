@@ -136,5 +136,19 @@
 
     "get_service_provider": "rule:regular_user",
     "get_lsn": "rule:admin_only",
-    "create_lsn": "rule:admin_only"
+    "create_lsn": "rule:admin_only",
+
+    "create_attachment_point": "rule:admin",
+    "get_attachment_point": "rule:admin_or_owner",
+    "update_attachment_point": "rule:admin_or_owner",
+    "delete_attachment_point": "rule:admin_or_owner",
+    "attach_attachment_point": "rule:admin_or_owner",
+    "detach_attachment_point": "rule:admin_or_owner",
+
+    "create_external_port": "rule:admin",
+    "get_external_port": "rule:admin_or_owner",
+    "update_external_port": "rule:admin_or_owner",
+    "delete_external_port": "rule:admin_or_owner",
+    "attach_external_port": "rule:admin_or_owner",
+    "detach_external_port": "rule:admin_or_owner"
 }

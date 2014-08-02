@@ -254,6 +254,25 @@ class OVSBridge(BaseOVS):
         self.run_vsctl(vsctl_command)
         return self.get_port_ofport(port_name)
 
+    def add_explicit_tunnel_port(self, port_name, remote_ip, local_ip,
+                        tunnel_type=p_const.TYPE_GRE,
+                        vlan_tag=None, gre_key=1):
+        """Creates a new Open vSwitch tunnel port, currently only of
+        type GRE, which may be associated to a specific VLAN tag."""
+
+        vsctl_command = ["--", "--may-exist", "add-port", self.br_name,
+                         port_name]
+        vsctl_command.extend(["--", "set", "Interface", port_name,
+                              "type=%s" % tunnel_type])
+        vsctl_command.extend(["options:remote_ip=%s" % remote_ip,
+                              "options:local_ip=%s" % local_ip,
+                              "options:key=%s" % gre_key])
+        if vlan_tag:
+            vsctl_command.extend(["--", "set", "Port", port_name,
+                              "tag=%s" % vlan_tag])
+        self.run_vsctl(vsctl_command)
+        return self.get_port_ofport(port_name)
+
     def add_patch_port(self, local_name, remote_name):
         self.run_vsctl(["add-port", self.br_name, local_name,
                         "--", "set", "Interface", local_name,

@@ -44,7 +44,7 @@ from neutron.openstack.common.rpc import dispatcher
 from neutron.plugins.common import constants as p_const
 from neutron.plugins.openvswitch.common import config  # noqa
 from neutron.plugins.openvswitch.common import constants
-
+from neutron.db import external_port_rpc_base
 
 LOG = logging.getLogger(__name__)
 
@@ -122,7 +122,8 @@ class OVSSecurityGroupAgent(sg_rpc.SecurityGroupAgentRpcMixin):
 
 
 class OVSNeutronAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin,
-                      l2population_rpc.L2populationRpcCallBackMixin):
+                      l2population_rpc.L2populationRpcCallBackMixin,
+                      external_port_rpc_base.ExternalPortAgentRpcCallbackMixin):
     '''Implements OVS-based tunneling, VLANs and flat networks.
 
     Two local bridges are created: an integration bridge (defaults to
@@ -270,7 +271,9 @@ class OVSNeutronAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin,
         consumers = [[topics.PORT, topics.UPDATE],
                      [topics.NETWORK, topics.DELETE],
                      [constants.TUNNEL, topics.UPDATE],
-                     [topics.SECURITY_GROUP, topics.UPDATE]]
+                     [topics.SECURITY_GROUP, topics.UPDATE],
+                     [topics.ATTACHMENT_POINT, topics.ATTACH],
+                     [topics.ATTACHMENT_POINT, topics.DETACH]]
         if self.l2_pop:
             consumers.append([topics.L2POPULATION,
                               topics.UPDATE, cfg.CONF.host])
@@ -849,6 +852,7 @@ class OVSNeutronAgent(sg_rpc.SecurityGroupAgentRpcCallbackMixin,
                 utils.execute(['/sbin/udevadm', 'settle', '--timeout=10'])
             int_veth, phys_veth = ip_wrapper.add_veth(int_veth_name,
                                                       phys_veth_name)
+
             self.int_ofports[physical_network] = self.int_br.add_port(int_veth)
             self.phys_ofports[physical_network] = br.add_port(phys_veth)
 
